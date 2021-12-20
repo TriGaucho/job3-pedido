@@ -1,12 +1,12 @@
 # pedidojob3 - Front-End
 
-## Configuração de Ambientes:
+
 
 ### 1. Configurar variaveis de ambiente: 
-    * a) Criar arquivos 
+    a) Criar arquivos 
       * *.env.development* 
       * *.env.production*
-    * b) Configurar variaveis:
+    b) Configurar variaveis:
         * VUE_APP_API_URL
         * VUE_APP_PUBLIC_PATH
 
