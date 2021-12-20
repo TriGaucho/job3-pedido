@@ -5,6 +5,6 @@ module.exports = {
     configureWebpack: {
         devtool: 'source-map'
       },
-    publicPath: process.env.VUE_APP_API_URL === 'production' ? '././' : './',
+    publicPath: process.env.PUBLIC_PATH === 'production' ? '././' : './',
     outputDir: 'pedido',
 }
