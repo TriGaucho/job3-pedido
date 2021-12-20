@@ -10,6 +10,7 @@ export default {
             }
         })
         console.log(url)
+        console.log(modulo)
     },
 
     post: (modulo, obj, callback) => {
