@@ -84,8 +84,7 @@
 
 <script>
 import apiCep from '../services/apiCep.js'
-import xmlPedido from '../services/xmlPedido.js'
-import apiBing from '../services/apiBing.js'
+import apiJOB3 from '../services/apiJOB3.js'
 
 export default {
     name: 'Pedido',
@@ -130,7 +129,7 @@ export default {
         },
 
         async getProdutos() {
-            apiBing.get('produtos/json/', response => {
+            apiJOB3.get('produtos', response => {
                 const produtosBling = response.data.retorno.produtos
                 this.produtos = produtosBling.map(i => {
                     return {
@@ -170,23 +169,24 @@ export default {
         async enviarPedido(dadosForm) {
             dadosForm.preventDefault()
             
-            const dadosXML = {
-                nome: this.nome,
-                cpf_cnpj: this.cpf_cnpj,
-                fone: this.fone,
-                tipoPessoa: 'F',
-                cep: this.cep,
-                endereco: this.enderecoCEP.logradouro,
-                bairro: this.enderecoCEP.bairro,
-                cidade: this.enderecoCEP.localidade,
-                uf: this.enderecoCEP.uf,
-                numero: this.numero,
-                complemento: this.complemento,
+            const dadosPedido = {
+                cliente: {
+                    nome: this.nome,
+                    cpf_cnpj: this.cpf_cnpj,
+                    fone: this.fone,
+                    tipoPessoa: 'F',
+                    cep: this.cep,
+                    endereco: this.enderecoCEP.logradouro,
+                    bairro: this.enderecoCEP.bairro,
+                    cidade: this.enderecoCEP.localidade,
+                    uf: this.enderecoCEP.uf,
+                    numero: this.numero,
+                    complemento: this.complemento,
+                },
                 itens: this.itens
             }
-            const xml = xmlPedido.montaXML(dadosXML)
             
-            apiBing.post('pedido/', xml, response => {
+            apiJOB3.post('pedido', dadosPedido, response => {
                 alert(`${response}Salvo com sucesso`)
           })
         }
