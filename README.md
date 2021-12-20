@@ -4,11 +4,11 @@
 
 ### 1. Configurar variaveis de ambiente: 
     a) Criar arquivos 
-      * *.env.development* 
-      * *.env.production*
+      .env.development* 
+      .env.production*
     b) Configurar variaveis:
-        * VUE_APP_API_URL
-        * VUE_APP_PUBLIC_PATH
+        VUE_APP_API_URL
+        VUE_APP_PUBLIC_PATH
 
 ### 2. Instalar Dependências:
 ```
