@@ -1,24 +1,29 @@
-# pedidojob3
+# pedidojob3 - Front-End
 
-## Project setup
+## Configuração de Ambientes:
+
+### 1. Configurar variaveis de ambiente: 
+    * a) Criar arquivos 
+      * *.env.development* 
+      * *.env.production*
+    * b) Configurar variaveis:
+        * VUE_APP_API_URL
+        * VUE_APP_PUBLIC_PATH
+
+### 2. Instalar Dependências:
 ```
-npm install
+npm i
 ```
 
-### Compiles and hot-reloads for development
+### 3. Copilar em Desenvolvimento:
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 4. Gerar arquivos de Produção:
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 5. Diretórios de publicação 
+**__vue.config.js/publicPath__**
