@@ -2,81 +2,106 @@
     <div>
         <h1>Pedidos</h1>
 
-        <form method="POST" @submit="enviarPedido">
+        <form class="row g-3" method="POST" @submit="enviarPedido">
             <!-- Dados do Cliente -->
-            <div>
-                <label for="cpf">CPF: </label>
-                <input type="number" v-model='cpf_cnpj' id="cpf" name="cpf" maxlength="11"> <br>
-
-                <label for="nome">Nome: </label>
-                <input type="text" v-model='nome' id="nome" name="nome"> <br>
-                
-                <label for="fone">Nº WhatsApp: </label>
-                <input type="number" v-model='fone' id="fone" name="fone"> <br>
+            <div class="col-md-2">
+                <label class="form-label" for="cpf">CPF</label>
+                <input class="form-control" type="number" v-model='cpf_cnpj' id="cpf" name="cpf" maxlength="11" > <br>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label" for="nome">Nome</label>
+                <input class="form-control" type="text" v-model='nome' id="nome" name="nome"> <br>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="fone">WhatsApp</label>
+                <input class="form-control" type="number" v-model='fone' id="fone" name="fone"> <br>
             </div>
             <!-- Dados do endereço -->
-            <div>
-                <label for="cep">CEP: </label>
-                <input type="number" v-model='cep' id="cep" name="cep" maxlength="8"> <br>
+            <div class="col-md-4">
+                <label class="form-label" for="cep">CEP</label>
+                <input class="form-control" type="number" v-model='cep' id="cep" name="cep" maxlength="8"> <br>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label" for="endereco">Endereço</label>
+                <input class="form-control" type="text" id="endereco" name="endereco" v-model="enderecoCEP.logradouro">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="bairro">Bairro</label>
+                <input class="form-control" type="bairro" id="bairro" name="bairro" v-model="enderecoCEP.bairro"> <br>
+            </div>
 
-                <label for="endereco">Endereço: </label>
-                <input type="text" id="endereco" name="endereco" v-model="enderecoCEP.logradouro">
+            <div class="col-md-4">
+                <label class="form-label" for="cidade">Cidade</label>
+                <input class="form-control" type="cidade" id="cidade" name="cidade" v-model="enderecoCEP.localidade">
+            </div>
 
-                <label for="bairro">Bairro: </label>
-                <input type="bairro" id="bairro" name="bairro" v-model="enderecoCEP.bairro"> <br>
 
-                <label for="cidade">Cidade: </label>
-                <input type="cidade" id="cidade" name="cidade" v-model="enderecoCEP.localidade">
+            <div class="col-md-2">
+                <label class="form-label" for="uf">UF</label>
+                <input class="form-control" type="uf" id="uf" name="uf" v-model="enderecoCEP.uf">
+            </div>
 
-                <label for="uf">UF: </label>
-                <input type="uf" id="uf" name="uf" v-model="enderecoCEP.uf">
-
-                <label for="numero">Nº: </label>
-                <input type="number" id="numero" name="numero" v-model="numero">
+            <div class="col-md-2">
+                <label class="form-label" for="numero">Nº</label>
+                <input class="form-control" type="number" id="numero" name="numero" v-model="numero">
+            </div>
                 
-                <label for="complemento">Compl: </label>
-                <input type="text" id="complemento" name="complemento" v-model="complemento"> <br>
+            <div class="col-md-2">
+                <label class="form-label" for="complemento">Compl.</label>
+                <input class="form-control" type="text" id="complemento" name="complemento" v-model="complemento"> <br>
             </div>
             <!-- Seleção de Produto -->
-            <div>
-                <label for="produto">Produto: </label>
-                <select name="produto" id="produto" v-model="produto">
+            <div class="col-md-6">
+                <label class="form-label" for="produto">Produto</label>
+                <select class="form-select" name="produto" id="produto" v-model="produto">
                     <option value="" selected>Selecione os produtos...</option>
                     <option v-for="produto in produtos" :key="produto.codigo" :value="produto" >{{produto.descricao}} - R$ {{produto.preco}}</option>
                 </select>
-
-                <label for="qtde">Qtd: </label>
-                <input type="number" id="qtde" name="qtde" v-model="qtdeTemp">
-                
-                <label for="un">Un.</label>
-                <input type="text" id="un" name="un" v-if="!produto" value="   Un." disabled>
-                <input type="text" id="un" name="un" v-else :value="produto.unidade" disabled>
-                
-                
-                <label for="preco" v-if="!produto">Preço: R$ 0,00</label>
-                <label for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label>
-
-                <button v-on:click.prevent="inlcuirItem">Incluir</button>
-                <!-- Tabela com os Produtos -->
-                <table>
-                    <tr>
-                        <td>Descrição</td>
-                        <td>Quantidade</td>
-                        <td>Preço</td>
-                        <td>Total</td>
-                        <td></td>
-                    </tr>
-                    <tr v-for="(item, index) in itens" :key="item.index">
-                        <td>{{item.descricao}}</td>
-                        <td>{{item.qtde}}{{item.un}}</td>
-                        <td>{{item.vlr_unit}}</td>
-                        <td>{{item.vlr_unit * item.qtde}}</td>
-                        <td><button v-on:click.prevent="excluirItem(index)">Excluir</button></td>
-                    </tr>
-                </table>
             </div>
 
-            <input type="submit" value="Enviar Pedido" >
+            <div class="col-md-1">
+                <label class="form-label" for="qtde">Qtd: </label>
+                <input class="form-control" type="number" id="qtde" name="qtde" v-model="qtdeTemp">
+            </div>
+
+            <div class="col-md-1">    
+                <label class="form-label" for="un">Un</label>
+                <input class="form-control" type="text" id="un" name="un" v-if="!produto" value="   Un." disabled>
+                <input class="form-control" type="text" id="un" name="un" v-else :value="produto.unidade" disabled>
+            </div>   
+            <div class="col-md-2">         
+                <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label>
+                <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label>
+            </div>
+            <div class="col-md-2">  
+                <button class="btn btn-primary" v-on:click.prevent="inlcuirItem">Incluir</button>
+            </div>
+            <div>
+                <!-- Tabela com os Produtos -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td scope="col">Descrição</td>
+                            <td scope="col">Quantidade</td>
+                            <td scope="col">Preço</td>
+                            <td scope="col">Total</td>
+                            <td scope="col"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in itens" :key="item.index">
+                            <td>{{item.descricao}}</td>
+                            <td>{{item.qtde}} {{item.un}}</td>
+                            <td>{{item.vlr_unit}}</td>
+                            <td>{{item.vlr_unit * item.qtde}}</td>
+                            <td><button class="btn btn-danger" v-on:click.prevent="excluirItem(index)">Excluir</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <div class="col-md-2">  
+            <button class="btn btn-success" value="Enviar Pedido">Enviar Pedido</button>
+        </div>
         </form>
 
     </div>
