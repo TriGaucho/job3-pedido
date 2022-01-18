@@ -6,7 +6,7 @@
             <!-- Dados do Cliente -->
             <div class="col-md-2">
                 <label class="form-label" for="cpf">CPF</label>
-                <input class="form-control" type="number" v-model='cpf_cnpj' id="cpf" name="cpf" maxlength="11" > <br>
+                <input class="form-control" type="text" v-model='cpf_cnpj' id="cpf" name="cpf" v-mask="'###.###.###-##'"> <br>
             </div>
             <div class="col-md-8">
                 <label class="form-label" for="nome">Nome</label>
@@ -14,12 +14,12 @@
             </div>
             <div class="col-md-2">
                 <label class="form-label" for="fone">WhatsApp</label>
-                <input class="form-control" type="number" v-model='fone' id="fone" name="fone"> <br>
+                <input class="form-control" type="text" v-model='fone' id="fone" name="fone" v-mask="'(##) #####.####'"> <br>
             </div>
             <!-- Dados do endereço -->
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <label class="form-label" for="cep">CEP</label>
-                <input class="form-control" type="number" v-model='cep' id="cep" name="cep" maxlength="8"> <br>
+                <input class="form-control" type="text" v-model='cep' id="cep" name="cep" maxlength="8" v-mask="'#####-###'"> <br>
             </div>
             <div class="col-md-8">
                 <label class="form-label" for="endereco">Endereço</label>
