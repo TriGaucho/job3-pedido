@@ -30,3 +30,5 @@ npm run build
 
 Dependências
 Vue input mask - https://github.com/probil/v-mask/blob/master/README-pt.md - adiciona as máscara nos inputs.
+
+Vuelidate - https://vuelidate.js.org/ - validação de formulário
