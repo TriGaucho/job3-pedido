@@ -2,36 +2,35 @@
     <div>
         <h1>Pedidos</h1>
 
-        <form class="row g-3" method="POST" @submit="enviarPedido">
-              <p v-if="errors.length">
-                <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
-                <ul>
-                    <li v-for="error in errors" :key="error.indice">{{ error }}</li>
-                </ul>
-            </p>
+        <form class="row g-3" method="POST" @submit.prevent="validaForm">
+
             <!-- Dados do Cliente -->
             <div class="col-md-2">
                 <label class="form-label" for="cpf">CPF</label>
                 <input 
-                    class="form-control" 
+                    class="form-control"
+                    :class="{ 'is-invalid': $v.cpf_cnpj.$error }"
+                    v-model.trim="$v.cpf_cnpj.$model" 
                     type="text" 
-                    v-model='cpf_cnpj' 
                     id="cpf" 
                     name="cpf" 
                     v-mask="'###.###.###-##'"
-                    
+                    placeholder="somente números"
                 >
+            <div class="invalid-feedback" v-if="!$v.cpf_cnpj.required">Preencher o CPF</div>
             </div>
             <div class="col-md-8">
                 <label class="form-label" for="nome">Nome</label>
                 <input 
-                    class="form-control" 
+                    class="form-control"
+                    :class="{ 'is-invalid': $v.nome.$error }"
+                    v-model.trim='$v.nome.$model' 
                     type="text" 
-                    v-model='nome' 
                     id="nome" 
                     name="nome"
-                    
+                    placeholder="digite o nome"
                 >
+                <div class="invalid-feedback" v-if="!$v.nome.required">Preencher o Nome</div>
             </div>
             <div class="col-md-2">
                 <label class="form-label" for="fone">WhatsApp</label>
@@ -42,6 +41,7 @@
                     id="fone" 
                     name="fone" 
                     v-mask="'(##) #####.####'"
+                    placeholder="somente números"
                 >
             </div>
             <!-- Dados do endereço -->
@@ -50,23 +50,27 @@
                 <input 
                     class="form-control" 
                     type="text" 
-                    v-model='cep' 
-                    id="cep" 
-                    name="cep" 
-                    maxlength="8" 
+                    :class="{ 'is-invalid': $v.cep.$error }"
+                    v-model.trim='$v.cep.$model' 
+                    id="cep"
+                    name="cep"
                     v-mask="'#####-###'"
-                    
+                    placeholder="somente números"
                 >
+                <div class="invalid-feedback" v-if="!$v.cep.required">Preencher o CEP</div>
             </div>
             <div class="col-md-8">
                 <label class="form-label" for="endereco">Endereço</label>
                 <input 
-                    class="form-control" 
+                    class="form-control"
                     type="text" 
                     id="endereco" 
-                    name="endereco" 
-                    v-model="enderecoCEP.logradouro"
+                    name="endereco"
+                    :class="{ 'is-invalid': $v.endereco.$error }"
+                    v-model.trim='$v.endereco.$model'
+                    placeholder="avenida, rua, alameda, etc"
                 >
+                <div class="invalid-feedback" v-if="!$v.endereco.required">Preencher Endereço</div>
             </div>
             <div class="col-md-2">
                 <label class="form-label" for="bairro">Bairro</label>
@@ -74,11 +78,13 @@
                     class="form-control" 
                     type="text" 
                     id="bairro" 
-                    name="bairro" 
-                    v-model="enderecoCEP.bairro"
+                    name="bairro"
+                    :class="{ 'is-invalid': $v.bairro.$error }"
+                    v-model.trim='$v.bairro.$model' 
+                    placeholder="bairro"
                 >
+                <div class="invalid-feedback" v-if="!$v.bairro.required">Preencher Bairro</div>
             </div>
-
             <div class="col-md-4">
                 <label class="form-label" for="cidade">Cidade</label>
                 <input 
@@ -86,11 +92,12 @@
                     type="cidade" 
                     id="cidade" 
                     name="cidade" 
-                    v-model="enderecoCEP.localidade"
+                    :class="{ 'is-invalid': $v.cidade.$error }"
+                    v-model.trim='$v.cidade.$model'
+                    placeholder="cidade"
                 >
+                <div class="invalid-feedback" v-if="!$v.cidade.required">Preencher Cidade</div>
             </div>
-
-
             <div class="col-md-2">
                 <label class="form-label" for="uf">UF</label>
                 <input 
@@ -98,10 +105,12 @@
                     type="uf" 
                     id="uf" 
                     name="uf" 
-                    v-model="enderecoCEP.uf"
+                    :class="{ 'is-invalid': $v.uf.$error }"
+                    v-model.trim='$v.uf.$model'
+                    placeholder="uf"
                 >
+                <div class="invalid-feedback" v-if="!$v.uf.required">Preencher UF</div>
             </div>
-
             <div class="col-md-2">
                 <label class="form-label" for="numero">Nº</label>
                 <input 
@@ -109,8 +118,11 @@
                     type="number" 
                     id="numero" 
                     name="numero" 
-                    v-model="numero"
+                    :class="{ 'is-invalid': $v.numero.$error }"
+                    v-model.trim='$v.numero.$model'
+                    placeholder="nº"
                 >
+                <div class="invalid-feedback" v-if="!$v.uf.numero">Preencher Número</div>
             </div>
                 
             <div class="col-md-2">
@@ -121,6 +133,7 @@
                     id="complemento" 
                     name="complemento" 
                     v-model="complemento"
+                    placeholder="apart, bloco, etc"
                 >
             </div>
             <!-- Seleção de Produto -->
@@ -172,6 +185,7 @@
             </div>
             <!-- Tabela com os Produtos -->
             <div>
+            <div class="alert alert-warning alert-dismissible fade show" v-if=$v.itens.$error role="alert">Incluir ao menos um item</div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -196,9 +210,10 @@
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
         <div class="col-md-2">  
-            <button class="btn btn-success">Enviar Pedido</button>
+            <button class="btn btn-success" type="submit">Enviar Pedido</button>
         </div>
         <div class="col-md-2">  
             <button class="btn btn-danger" @click="limpaForm()">Limpar</button>
@@ -211,13 +226,13 @@
 <script>
 import apiCep from '../services/apiCep.js'
 import apiJOB3 from '../services/apiJOB3.js'
+import { required, minLength, maxLength, between } from 'vuelidate/lib/validators'
 
 export default {
     name: 'Pedido',
     data() {
         return {
-            errors: [],
-            cpf_cnpj: null,
+            cpf_cnpj: '',
             nome: null,
             fone: null,
             cep: '',
@@ -227,7 +242,7 @@ export default {
             uf: null,
             numero: null,
             complemento: null,
-            enderecoCEP: {
+            dadosCEP: {
                 logradouro: null,
                 bairro: null,
                 localidade: null,
@@ -241,35 +256,45 @@ export default {
             qtdeTemp: null,
         }
     },
+    validations: {
+        cpf_cnpj: {
+            required,
+            minLength: minLength(14)
+        },
+        nome: {
+            required
+        }, 
+        fone: {
+            required
+        },
+        cep: {
+           required,
+           minLength: minLength(9)
+        }, 
+        endereco: {
+            required
+        },
+        bairro: {
+            required
+        },
+        cidade: {
+            required
+        },
+        uf: {
+            required,
+            minLength: minLength(2),
+            maxLength: maxLength(2)
+        },
+        numero: {
+            required,
+            between: between(1, 9999)
+        },
+        itens: {
+           required, 
+           minLength: minLength(1),
+        }
+    },
     methods: {
-        async consultarCEP() {
-            if(!this.cep) return alert('Preencher o CEP')
-
-            apiCep.get(this.cep, res => {
-               const dadosCEP = res.data
-               if(dadosCEP.erro) {
-                   return alert(`CEP ${this.cep} inválido !`)
-               }
-               this.enderecoCEP = {...dadosCEP}
-               console.log(this.enderecoCEP)
-            }) 
-        },
-
-        async getProdutos() {
-            apiJOB3.get('produtos', response => {
-                const produtosBling = response.data.retorno.produtos
-                this.produtos = produtosBling.map(i => {
-                    return {
-                        codigo: i.produto.codigo,
-                        descricao: i.produto.descricao,
-                        unidade: i.produto.unidade,
-                        preco: i.produto.preco,
-                    }   
-                })
-                console.log(this.produtos)
-            })
-        },
-
         async inlcuirItem() {
             const item = {
                 codigo: this.produto.codigo,
@@ -293,11 +318,18 @@ export default {
             console.log(`Novo array: ${test}`)
         },
 
-        async enviarPedido(dadosForm) {
-            this.validaForm()
-            
-            dadosForm.preventDefault()
+        async validaForm() {
+            this.$v.$touch()
+            if (this.$v.$invalid) {
+                this.submitStatus = 'ERROR'
+            } else {
+                setTimeout(() => {
+                this.enviarPedido()
+                }, 500)
+            }
+        },
 
+        async enviarPedido() {
             const dadosPedido = {
                 cliente: {
                     nome: this.nome,
@@ -305,10 +337,10 @@ export default {
                     fone: this.fone,
                     tipoPessoa: 'F',
                     cep: this.cep,
-                    endereco: this.enderecoCEP.logradouro,
-                    bairro: this.enderecoCEP.bairro,
-                    cidade: this.enderecoCEP.localidade,
-                    uf: this.enderecoCEP.uf,
+                    endereco: this.endereco,
+                    bairro: this.dadosCEP.bairro,
+                    cidade: this.dadosCEP.localidade,
+                    uf: this.dadosCEP.uf,
                     numero: this.numero,
                     complemento: this.complemento,
                 },
@@ -318,10 +350,8 @@ export default {
             apiJOB3.post('pedido', dadosPedido, response => {
                 alert(`${response}Salvo com sucesso`)
           })
-        },
 
-        async validaForm() {
-            return (!this.cpf_cnpj) ? true : this.errors.push('O nome é obrigatório.')
+        //   this.limpaForm()
         },
 
         async limpaForm() {
@@ -329,42 +359,56 @@ export default {
                 this.produto=null,
                 this.produtos= null,
                 this.nome= null,
-                this.cpf_cnpj= '',
+                this.cpf_cnpj= null,
                 this.fone= null,
-                this.cep= '',
+                this.cep= null,
                 this.endereco= null,
                 this.bairro= null,
                 this.cidade= null,
                 this.uf= null,
                 this.numero= null,
                 this.complemento= null,
-                this.enderecoCEP= {
-                    logradouro: null,
-                    bairro: null,
-                    localidade: null,
-                    uf: null,
-                    cep: null
-                },
                 this.itens= [],
                 this.item= null
             
         }
     },
 
-
     mounted() {
-        this.getProdutos()
+        apiJOB3.get('produtos', response => {
+            const produtosBling = response.data.retorno.produtos
+            this.produtos = produtosBling.map(i => {
+                return {
+                    codigo: i.produto.codigo,
+                    descricao: i.produto.descricao,
+                    unidade: i.produto.unidade,
+                    preco: i.produto.preco,
+                }   
+            })
+            console.log(this.produtos)
+         })
     },
 
     watch: {
         cep: function (novoCEP) {
-            if(novoCEP.length === 8) this.consultarCEP()
-            else this.enderecoCEP = null
+            if(novoCEP.length === 9) {
+                apiCep.get(this.cep, res => {
+                    const dadosCEP = res.data
+                    if(dadosCEP.erro) {
+                        return alert(`CEP ${this.cep} inválido !`)
+                    }
+                    
+                    this.endereco = dadosCEP.logradouro
+                    this.bairro = dadosCEP.bairro
+                    this.cidade = dadosCEP.localidade
+                    this.uf = dadosCEP.uf
+                })      
+            }
         },
         
         produto: function () {
             console.log(this.produto)
-        }
+        },
     }
 }
 </script>
