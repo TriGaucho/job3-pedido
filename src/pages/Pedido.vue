@@ -2,7 +2,7 @@
     <div>
         <h1>Pedidos</h1>
 
-        <form class="row g-3" method="POST" @submit.prevent="validaForm">
+        <form class="row g-3" method="POST" @submit.prevent="validarForm">
 
             <!-- Dados do Cliente -->
             <div class="col-md-2">
@@ -185,7 +185,7 @@
             </div>
             <!-- Tabela com os Produtos -->
             <div>
-            <div class="alert alert-warning alert-dismissible fade show" v-if=$v.itens.$error role="alert">Incluir ao menos um item</div>
+            <div class="alert alert-danger alert-dismissible fade show" v-if=$v.itens.$error role="alert">Deve-se incluir ao menos um item no pedido</div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -216,7 +216,7 @@
             <button class="btn btn-success" type="submit">Enviar Pedido</button>
         </div>
         <div class="col-md-2">  
-            <button class="btn btn-danger" @click="limpaForm()">Limpar</button>
+            <button class="btn btn-danger" @click="limparForm()">Limpar</button>
         </div>
         </form>
 
@@ -232,23 +232,16 @@ export default {
     name: 'Pedido',
     data() {
         return {
-            cpf_cnpj: '',
+            cpf_cnpj: null,
             nome: null,
             fone: null,
-            cep: '',
+            cep: null,
             endereco: null,
             bairro: null,
             cidade: null,
             uf: null,
             numero: null,
             complemento: null,
-            dadosCEP: {
-                logradouro: null,
-                bairro: null,
-                localidade: null,
-                uf: null,
-                cep: null
-            },
             produtos: null,
             produto:null,
             item: null,
@@ -308,17 +301,13 @@ export default {
             this. qtdeTemp = null
 
             this.itens.push(item)
-            const test = this.itens
-            console.log(test)
         },
 
         async excluirItem(index) {
-            console.log(`Index: ${index}`)
-            const test = this.itens.splice(index, 1)
-            console.log(`Novo array: ${test}`)
+            this.itens.splice(index, 1)
         },
 
-        async validaForm() {
+        async validarForm() {
             this.$v.$touch()
             if (this.$v.$invalid) {
                 this.submitStatus = 'ERROR'
@@ -338,9 +327,9 @@ export default {
                     tipoPessoa: 'F',
                     cep: this.cep,
                     endereco: this.endereco,
-                    bairro: this.dadosCEP.bairro,
-                    cidade: this.dadosCEP.localidade,
-                    uf: this.dadosCEP.uf,
+                    bairro: this.bairro,
+                    cidade: this.localidade,
+                    uf: this.uf,
                     numero: this.numero,
                     complemento: this.complemento,
                 },
@@ -348,29 +337,32 @@ export default {
             }
             
             apiJOB3.post('pedido', dadosPedido, response => {
-                alert(`${response}Salvo com sucesso`)
+                alert(`Pedido criado com sucesso`)
+                this.limparForm()
+                console.log(response)
           })
 
-        //   this.limpaForm()
+        
         },
 
-        async limpaForm() {
-                this.qtdeTemp = null
-                this.produto=null,
-                this.produtos= null,
-                this.nome= null,
-                this.cpf_cnpj= null,
-                this.fone= null,
-                this.cep= null,
-                this.endereco= null,
-                this.bairro= null,
-                this.cidade= null,
-                this.uf= null,
-                this.numero= null,
-                this.complemento= null,
-                this.itens= [],
-                this.item= null
-            
+        async limparForm() {
+            this.cpf_cnpj = null
+            this.nome = null
+            this.fone = null
+            this.cep = null
+            this.endereco = null
+            this.bairro = null
+            this.cidade = null
+            this.uf = null
+            this.numero = null
+            this.complemento = null
+            this.produtos = null
+            this.produto =null
+            this.item = null
+            this.itens = []
+            this.qtdeTemp = null
+
+            document.location.reload()
         }
     },
 
@@ -385,7 +377,6 @@ export default {
                     preco: i.produto.preco,
                 }   
             })
-            console.log(this.produtos)
          })
     },
 
@@ -404,11 +395,7 @@ export default {
                     this.uf = dadosCEP.uf
                 })      
             }
-        },
-        
-        produto: function () {
-            console.log(this.produto)
-        },
+        }
     }
 }
 </script>
