@@ -1,7 +1,6 @@
 # pedidojob3 - Front-End
 
 
-
 ### 1. Configurar variaveis de ambiente: 
     a) Criar arquivos 
       .env.development* 
@@ -27,3 +26,9 @@ npm run build
 
 ### 5. Diretórios de publicação 
 **__vue.config.js/publicPath__**
+
+
+Dependências
+Vue input mask - https://github.com/probil/v-mask/blob/master/README-pt.md - adiciona as máscara nos inputs.
+
+Vuelidate - https://vuelidate.js.org/ - validação de formulário
