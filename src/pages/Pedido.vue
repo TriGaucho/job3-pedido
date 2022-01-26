@@ -8,7 +8,7 @@
 
                 <!-- Dados do Cliente -->
                 <div class="col-md-2">
-                    <label class="form-label" for="cpf">CPF</label>
+                    <!-- <label class="form-label" for="cpf">CPF</label> -->
                     <input 
                         class="form-control"
                         :class="{ 'is-invalid': $v.cpf_cnpj.$error }"
@@ -17,12 +17,12 @@
                         id="cpf" 
                         name="cpf" 
                         v-mask="'###.###.###-##'"
-                        placeholder="somente números"
+                        placeholder="CPF"
                     >
                 <div class="invalid-feedback" v-if="!$v.cpf_cnpj.required">Preencher o CPF</div>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label" for="nome">Nome</label>
+                    <!-- <label class="form-label" for="nome">Nome</label> -->
                     <input 
                         class="form-control"
                         :class="{ 'is-invalid': $v.nome.$error }"
@@ -30,12 +30,12 @@
                         type="text" 
                         id="nome" 
                         name="nome"
-                        placeholder="digite o nome"
+                        placeholder="Nome"
                     >
                     <div class="invalid-feedback" v-if="!$v.nome.required">Preencher o Nome</div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label" for="fone">WhatsApp</label>
+                    <!-- <label class="form-label" for="fone">WhatsApp</label> -->
                     <input 
                         class="form-control" 
                         type="text" 
@@ -43,12 +43,12 @@
                         id="fone" 
                         name="fone" 
                         v-mask="'(##) #####.####'"
-                        placeholder="somente números"
+                        placeholder="Telefone"
                     >
                 </div>
                 <!-- Dados do endereço -->
                 <div class="col-md-2">
-                    <label class="form-label" for="cep">CEP</label>
+                    <!-- <label class="form-label" for="cep">CEP</label> -->
                     <input 
                         class="form-control" 
                         type="text" 
@@ -57,12 +57,12 @@
                         id="cep"
                         name="cep"
                         v-mask="'#####-###'"
-                        placeholder="somente números"
+                        placeholder="CEP"
                     >
                     <div class="invalid-feedback" v-if="!$v.cep.required">Preencher o CEP</div>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label" for="endereco">Endereço</label>
+                    <!-- <label class="form-label" for="endereco">Endereço</label> -->
                     <input 
                         class="form-control"
                         type="text" 
@@ -70,12 +70,12 @@
                         name="endereco"
                         :class="{ 'is-invalid': $v.endereco.$error }"
                         v-model.trim='$v.endereco.$model'
-                        placeholder="avenida, rua, alameda, etc"
+                        placeholder="Endereço/Logradouro"
                     >
                     <div class="invalid-feedback" v-if="!$v.endereco.required">Preencher Endereço</div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label" for="bairro">Bairro</label>
+                    <!-- <label class="form-label" for="bairro">Bairro</label> -->
                     <input 
                         class="form-control" 
                         type="text" 
@@ -83,12 +83,12 @@
                         name="bairro"
                         :class="{ 'is-invalid': $v.bairro.$error }"
                         v-model.trim='$v.bairro.$model' 
-                        placeholder="bairro"
+                        placeholder="Bairro"
                     >
                     <div class="invalid-feedback" v-if="!$v.bairro.required">Preencher Bairro</div>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label" for="cidade">Cidade</label>
+                    <!-- <label class="form-label" for="cidade">Cidade</label> -->
                     <input 
                         class="form-control" 
                         type="cidade" 
@@ -96,12 +96,12 @@
                         name="cidade" 
                         :class="{ 'is-invalid': $v.cidade.$error }"
                         v-model.trim='$v.cidade.$model'
-                        placeholder="cidade"
+                        placeholder="Cidade"
                     >
                     <div class="invalid-feedback" v-if="!$v.cidade.required">Preencher Cidade</div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label" for="uf">UF</label>
+                    <!-- <label class="form-label" for="uf">UF</label> -->
                     <input 
                         class="form-control" 
                         type="uf" 
@@ -109,12 +109,12 @@
                         name="uf" 
                         :class="{ 'is-invalid': $v.uf.$error }"
                         v-model.trim='$v.uf.$model'
-                        placeholder="uf"
+                        placeholder="UF"
                     >
                     <div class="invalid-feedback" v-if="!$v.uf.required">Preencher UF</div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label" for="numero">Nº</label>
+                    <!-- <label class="form-label" for="numero">Nº</label> -->
                     <input 
                         class="form-control" 
                         type="number" 
@@ -122,25 +122,25 @@
                         name="numero" 
                         :class="{ 'is-invalid': $v.numero.$error }"
                         v-model.trim='$v.numero.$model'
-                        placeholder="nº"
+                        placeholder="Nº"
                     >
                     <div class="invalid-feedback" v-if="!$v.uf.numero">Preencher Número</div>
                 </div>
                     
                 <div class="col-md-2">
-                    <label class="form-label" for="complemento">Compl.</label>
+                    <!-- <label class="form-label" for="complemento">Compl.</label> -->
                     <input 
                         class="form-control" 
                         type="text" 
                         id="complemento" 
                         name="complemento" 
                         v-model="complemento"
-                        placeholder="apart, bloco, etc"
+                        placeholder="Complemento"
                     >
                 </div>
                 <!-- Seleção de Produto -->
                 <div class="col-md-6">
-                    <label class="form-label" for="produto">Produto</label>
+                    <!-- <label class="form-label" for="produto">Produto</label> -->
                     <select class="form-select" name="produto" id="produto" v-model="produto">
                         <option 
                             v-for="produto in produtos" 
@@ -150,17 +150,18 @@
                     </select>
                 </div>
                 <div class="col-md-1">
-                    <label class="form-label" for="qtde">Qtd: </label>
+                    <!-- <label class="form-label" for="qtde">Qtd: </label> -->
                     <input 
                         class="form-control" 
                         type="number" 
                         id="qtde" 
                         name="qtde" 
                         v-model="qtdeTemp"
+                        placeholder="Qtd."
                     >
                 </div>
                 <div class="col-md-1">    
-                    <label class="form-label" for="un">Un</label>
+                    <!-- <label class="form-label" for="un">Un</label> -->
                     <input 
                         class="form-control" 
                         type="text" 
@@ -181,8 +182,26 @@
                     >
                 </div>   
                 <div class="col-md-2">         
-                    <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label>
-                    <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label>
+                    <!-- <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label> -->
+                    <!-- <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label> -->
+                     <input 
+                        v-if="!produto"
+                        class="form-control" 
+                        type="text" 
+                        id="preco" 
+                        name="preco"  
+                        value="R$" 
+                        disabled
+                    >
+                    <input 
+                        class="form-control" 
+                        type="text" 
+                        id="preco" 
+                        name="preco"
+                        v-else  
+                        :value="produto.preco * qtdeTemp" 
+                        disabled
+                    >
                 </div>
                 <div class="col-md-2">  
                     <button class="btn btn-primary" v-on:click.prevent="inlcuirItem">Incluir</button>
@@ -296,6 +315,7 @@ export default {
     },
     methods: {
         async inlcuirItem() {
+
             const item = {
                 codigo: this.produto.codigo,
                 descricao: this.produto.descricao,
@@ -305,7 +325,7 @@ export default {
             }
 
             this.produto = null
-            this. qtdeTemp = null
+            this.qtdeTemp = null
 
             this.itens.push(item)
         },
