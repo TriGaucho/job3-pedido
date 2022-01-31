@@ -1,11 +1,8 @@
 <template>
-    <div>
-        <div>
-            <br>
-        </div>
+    <main class="flex-shrink-0">
         <div class="container">
-            <form class="row g-3" method="POST" @submit.prevent="validarForm">
-
+            <div class="row">
+            <form class="row g-3 mt-3" method="POST" @submit.prevent="validarForm">
                 <!-- Dados do Cliente -->
                 <div class="col-md-2">
                     <!-- <label class="form-label" for="cpf">CPF</label> -->
@@ -185,7 +182,7 @@
                     <!-- <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label> -->
                     <!-- <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label> -->
                      <input 
-                        v-if="!produto"
+                        v-if=!produto
                         class="form-control" 
                         type="text" 
                         id="preco" 
@@ -208,7 +205,8 @@
                 </div>
                 <!-- Tabela com os Produtos -->
                 <div>
-                <div class="alert alert-danger alert-dismissible fade show" v-if=$v.itens.$error role="alert">Deve-se incluir ao menos um item no pedido</div>
+                    <div v-if=!validaQtd class="alert alert-danger alert-dismissible fade show" role="alert">Insira uma quantidade maior que 0(zero).</div>
+                    <div class="alert alert-danger alert-dismissible fade show" v-if=$v.itens.$error role="alert">Deve-se incluir ao menos um item no pedido.</div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -233,7 +231,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    
                 </div>
                 <div class="col-md-2">  
                     <button class="btn btn-success" type="submit">Enviar Pedido</button>
@@ -243,10 +240,8 @@
                 </div>
             </form>
         </div>
-        <div>
-            
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -273,6 +268,7 @@ export default {
             item: null,
             itens: [],
             qtdeTemp: null,
+            validaQtd: true
         }
     },
     validations: {
@@ -315,9 +311,11 @@ export default {
     },
     methods: {
         async inlcuirItem() {
-
-            const item = {
-                codigo: this.produto.codigo,
+            if (!this.qtdeTemp || this.qtdeTemp <= 0) {
+                this.validaQtd = false
+            } else {
+                const item = {
+                    codigo: this.produto.codigo,
                 descricao: this.produto.descricao,
                 un: this.produto.unidade,
                 qtde: this.qtdeTemp,
@@ -326,8 +324,10 @@ export default {
 
             this.produto = null
             this.qtdeTemp = null
+            this.validaQtd = true
 
             this.itens.push(item)
+            }
         },
 
         async excluirItem(index) {

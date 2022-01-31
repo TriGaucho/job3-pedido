@@ -1,13 +1,10 @@
 <template>
-  <div id="app">
-    <Header />
-    
-    <body>
+  <div id="app" class="d-flex flex-column h-100">
+      <Header />
+        
       <router-view path="$router.key" />
-    </body>
-
-    <Footer />
-    
+        
+      <Footer />
   </div>
 </template>
 

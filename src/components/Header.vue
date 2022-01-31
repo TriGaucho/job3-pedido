@@ -1,20 +1,37 @@
 <template>
-    <div>
-        <header> 
-            <nav class="navbar" style="background-color: #c79100">
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <img src="../assets/Job3_2.svg" width="178" height="65" class="d-inline-block align-top" alt="">
-                    <span class="fs-4">Pedido On-Line</span>
-                </a>
-                <ul class="nav" >
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Inicio</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Sobre</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Contato</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Historia</a></li>
-                </ul>    
-            </nav>
-        </header>
-    </div>
+    <header> 
+        <nav class="navbar navbar-expand-md text-decoration-none " style="background-color:#0A3623">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <a href="/" class="navbar-brand col-md-6">
+                        <img src="../assets/topLogarv.png" width="178" height="65" class="d-inline-block" alt="">
+                        <span class="fs-2 text-end col-md-0" style="color:#BB9E68">Pedido On-Line</span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="bi bi-list" style="font-color"></span>
+                    </button>
+                    </a>
+                </div>
+                <div class="d-flex">
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="nav navbar-nav me-auto mb-2 mb-md-0 " >
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2 " style="color:#BB9E68">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Sobre</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Contato</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Historia</a>
+                            </li>
+                        </ul>    
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 </template>
 
 <script>
