@@ -43,3 +43,8 @@ Bootstrap Icons - https://icons.getbootstrap.com/ - Icones CSS
   Dicas:
     Itens podem ser imagens, dentro da pasta assets, ou podem texto usando elemento <i> de html. 
     Exemplo: <i class="bi bi-facebook" style="font-size: 2rem"></i>
+
+------------------------------
+
+Conexão local para desenvolvimento:
+1. Alterar .env.development para VUE_APP_API_URL=http://localhost:8081/api/
