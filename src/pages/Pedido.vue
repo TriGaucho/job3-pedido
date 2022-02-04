@@ -28,6 +28,7 @@
                         id="nome" 
                         name="nome"
                         placeholder="Nome"
+                        
                     >
                     <div class="invalid-feedback" v-if="!$v.nome.required">Preencher o Nome</div>
                 </div>
@@ -195,7 +196,7 @@
                         type="text" 
                         id="preco" 
                         name="preco"
-                        v-else  
+                        v-else
                         :value="produto.preco * qtdeTemp" 
                         disabled
                     >
@@ -231,6 +232,10 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- Observações -->
+                <div>
+                    <textarea class="form-control" id="observacoes" v-model="observacoes" placeholder="Observações do Pedido"></textarea>
                 </div>
                 <div class="col-md-2">  
                     <button class="btn btn-success" type="submit">Enviar Pedido</button>
@@ -268,7 +273,8 @@ export default {
             item: null,
             itens: [],
             qtdeTemp: null,
-            validaQtd: true
+            validaQtd: true,
+            observacoes: null
         }
     },
     validations: {
@@ -315,7 +321,7 @@ export default {
                 this.validaQtd = false
             } else {
                 const item = {
-                    codigo: this.produto.codigo,
+                codigo: this.produto.codigo,
                 descricao: this.produto.descricao,
                 un: this.produto.unidade,
                 qtde: this.qtdeTemp,
@@ -360,7 +366,8 @@ export default {
                     numero: this.numero,
                     complemento: this.complemento,
                 },
-                itens: this.itens
+                itens: this.itens,
+                obs: this.observacoes
             }
             
             apiJOB3.post('pedido', dadosPedido, response => {
@@ -408,7 +415,7 @@ export default {
     },
 
     watch: {
-        cep: function (novoCEP) {
+        cep: function(novoCEP) {
             if(novoCEP.length === 9) {
                 apiCep.get(this.cep, res => {
                     const dadosCEP = res.data
@@ -421,6 +428,17 @@ export default {
                     this.cidade = dadosCEP.localidade
                     this.uf = dadosCEP.uf
                 })      
+            }
+        },
+
+        cpf_cnpj: function(novoCPFCNPJ) {
+            if(novoCPFCNPJ.length === 14) {
+                apiJOB3.get(`cliente/${novoCPFCNPJ}`, response => {
+                    console.log(response)
+                    this.nome = response.data.clienteNome
+                    this.fone = response.data.clienteFone
+                })
+
             }
         }
     }
