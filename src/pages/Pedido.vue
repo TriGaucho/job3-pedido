@@ -138,14 +138,16 @@
                 </div>
                 <!-- Seleção de Produto -->
                 <div class="col-md-6">
-                    <!-- <label class="form-label" for="produto">Produto</label> -->
-                    <select class="form-select" name="produto" id="produto" v-model="produto">
+                    <input class="form-control" list="listaProdutos" id="produto" 
+                        placeholder="Selecione o produto..." v-model="produto" v-on:input="selecionaProduto">
+                    <datalist id="listaProdutos">
                         <option 
                             v-for="produto in produtos" 
-                            :key="produto.codigo" 
-                            :value="produto" >{{produto.descricao}} - R$ {{produto.preco}}
+                            v-bind:key="produto.codigo" 
+                            v-bind:value="produto.codigo +' - '+ produto.descricao  +' - '+ produto.preco"
+                            >
                         </option>
-                    </select>
+                    </datalist>
                 </div>
                 <div class="col-md-1">
                     <!-- <label class="form-label" for="qtde">Qtd: </label> -->
@@ -165,7 +167,7 @@
                         type="text" 
                         id="un" 
                         name="un" 
-                        v-if="!produto"
+                        v-if="!produtoSelecionado"
                         value="Un."
                         disabled
                     >
@@ -175,7 +177,7 @@
                         id="un" 
                         name="un" 
                         v-else 
-                        :value="produto.unidade" 
+                        v-bind:value="produtoSelecionado.unidade" 
                         disabled
                     >
                 </div>   
@@ -183,7 +185,7 @@
                     <!-- <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label> -->
                     <!-- <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label> -->
                      <input 
-                        v-if=!produto
+                        v-if=!produtoSelecionado.preco
                         class="form-control" 
                         type="text" 
                         id="preco" 
@@ -197,7 +199,7 @@
                         id="preco" 
                         name="preco"
                         v-else
-                        :value="produto.preco * qtdeTemp" 
+                        v-bind:value="produtoSelecionado.preco * qtdeTemp" 
                         disabled
                     >
                 </div>
@@ -268,8 +270,13 @@ export default {
             uf: null,
             numero: null,
             complemento: null,
-            produtos: null,
+            produtos: [],
             produto:null,
+            produtoSelecionado: {
+                codigo: null,
+                descricao: null,
+                unidade: null
+            },
             item: null,
             itens: [],
             qtdeTemp: null,
@@ -321,11 +328,11 @@ export default {
                 this.validaQtd = false
             } else {
                 const item = {
-                codigo: this.produto.codigo,
-                descricao: this.produto.descricao,
-                un: this.produto.unidade,
+                codigo: this.produtoSelecionado.codigo,
+                descricao: this.produtoSelecionado.descricao,
+                un: this.produtoSelecionado.unidade,
                 qtde: this.qtdeTemp,
-                vlr_unit: this.produto.preco
+                vlr_unit: this.produtoSelecionado.preco
             }
 
             this.produto = null
@@ -370,10 +377,10 @@ export default {
                 obs: this.observacoes
             }
             
-            apiJOB3.post('pedido', dadosPedido, response => {
+            apiJOB3.post('pedido', dadosPedido, res => {
                 alert(`Pedido criado com sucesso`)
                 this.limparForm()
-                console.log(response)
+                console.log(res)
           })
 
         
@@ -397,6 +404,21 @@ export default {
             this.qtdeTemp = null
 
             document.location.reload()
+        },
+
+        selecionaProduto(e){
+            let descricaoProduto = e.target.value
+            let codigoArray = descricaoProduto.split(' - ')
+            let codigo = codigoArray[0]
+
+            if(codigo != this.produtoSelecionado.codigo){
+                this.produtos.forEach( i => {
+                    if (i.codigo === codigo) {
+                        this.produtoSelecionado = i
+                    }
+                })
+                this.$emit('selecionaProduto', this.produtoSelecionado.codigo)
+            }  
         }
     },
 
@@ -434,7 +456,6 @@ export default {
         cpf_cnpj: function(novoCPFCNPJ) {
             if(novoCPFCNPJ.length === 14) {
                 apiJOB3.get(`cliente/${novoCPFCNPJ}`, response => {
-                    console.log(response)
                     this.nome = response.data.clienteNome
                     this.fone = response.data.clienteFone
                 })
