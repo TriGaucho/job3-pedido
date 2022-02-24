@@ -144,7 +144,7 @@
                         <option 
                             v-for="produto in produtos" 
                             v-bind:key="produto.codigo" 
-                            v-bind:value="produto.codigo +' - '+ produto.descricao  +' - '+ produto.preco"
+                            v-bind:value="produto.codigo +' - '+ produto.descricao  +' - R$ '+ produto.preco"
                             >
                         </option>
                     </datalist>
@@ -199,7 +199,7 @@
                         id="preco" 
                         name="preco"
                         v-else
-                        v-bind:value="produtoSelecionado.preco * qtdeTemp" 
+                        v-bind:value="'R$ ' + produtoSelecionado.preco * qtdeTemp" 
                         disabled
                     >
                 </div>
@@ -225,7 +225,7 @@
                                 <td>{{item.descricao}}</td>
                                 <td>{{item.qtde}} {{item.un}}</td>
                                 <td>{{item.vlr_unit}}</td>
-                                <td>{{item.vlr_unit * item.qtde}}</td>
+                                <td>R$ {{item.vlr_unit * item.qtde}}</td>
                                 <td>
                                     <button class="btn btn-danger" v-on:click.prevent="excluirItem(index)">
                                         Excluir
@@ -424,15 +424,7 @@ export default {
 
     mounted() {
         apiJOB3.get('produtos', response => {
-            const produtosBling = response.data.retorno.produtos
-            this.produtos = produtosBling.map(i => {
-                return {
-                    codigo: i.produto.codigo,
-                    descricao: i.produto.descricao,
-                    unidade: i.produto.unidade,
-                    preco: i.produto.preco,
-                }   
-            })
+            this.produtos = response.data
          })
     },
 
