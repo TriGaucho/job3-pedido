@@ -269,7 +269,7 @@ export default {
             cidade: null,
             uf: null,
             numero: null,
-            complemento: null,
+            complemento: '',
             produtos: [],
             produto:null,
             produtoSelecionado: {
@@ -281,7 +281,8 @@ export default {
             itens: [],
             qtdeTemp: null,
             validaQtd: true,
-            observacoes: null
+            observacoes: '',
+            obsInternas: ''
         }
     },
     validations: {
@@ -368,13 +369,14 @@ export default {
                     cep: this.cep,
                     endereco: this.endereco,
                     bairro: this.bairro,
-                    cidade: this.localidade,
+                    cidade: this.cidade,
                     uf: this.uf,
                     numero: this.numero,
                     complemento: this.complemento,
                 },
                 itens: this.itens,
-                obs: this.observacoes
+                obs: this.observacoes,
+                obs_internas: this.obsInternas
             }
             
             apiJOB3.post('pedido', dadosPedido, res => {
