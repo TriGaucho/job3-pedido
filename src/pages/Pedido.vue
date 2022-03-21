@@ -208,7 +208,7 @@
                 </div>
                 <!-- Tabela com os Produtos -->
                 <div>
-                    <div v-if=!validaQtd class="alert alert-danger alert-dismissible fade show" role="alert">Insira uma quantidade maior que 0(zero).</div>
+                    <div v-if=mensagemValidacao class="alert alert-danger alert-dismissible fade show" role="alert">{{ mensagemValidacao }}</div>
                     <div class="alert alert-danger alert-dismissible fade show" v-if=$v.itens.$error role="alert">Deve-se incluir ao menos um item no pedido.</div>
                     <table class="table">
                         <thead>
@@ -272,15 +272,11 @@ export default {
             complemento: '',
             produtos: [],
             produto:null,
-            produtoSelecionado: {
-                codigo: null,
-                descricao: null,
-                unidade: null
-            },
+            produtoSelecionado: {},
             item: null,
             itens: [],
             qtdeTemp: null,
-            validaQtd: true,
+            mensagemValidacao: '',
             observacoes: '',
             obsInternas: ''
         }
@@ -325,23 +321,29 @@ export default {
     },
     methods: {
         async inlcuirItem() {
+            if (!this.produtoSelecionado.codigo)  {
+                return this.mensagemValidacao = 'Produto inválido ou inexistente.' 
+            }
+
             if (!this.qtdeTemp || this.qtdeTemp <= 0) {
-                this.validaQtd = false
-            } else {
-                const item = {
+                return this.mensagemValidacao = 'Insira uma quantidade maior que 0(zero).'
+            } 
+            const item = {
                 codigo: this.produtoSelecionado.codigo,
                 descricao: this.produtoSelecionado.descricao,
                 un: this.produtoSelecionado.unidade,
                 qtde: this.qtdeTemp,
                 vlr_unit: this.produtoSelecionado.preco
             }
-
+            
             this.produto = null
             this.qtdeTemp = null
-            this.validaQtd = true
-
+            this.mensagemValidacao = ''
+            
+            this.produtoSelecionado = {}
+            
             this.itens.push(item)
-            }
+            
         },
 
         async excluirItem(index) {
