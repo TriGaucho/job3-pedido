@@ -46,5 +46,9 @@ Bootstrap Icons - https://icons.getbootstrap.com/ - Icones CSS
 
 ------------------------------
 
-Conexão local para desenvolvimento:
-1. Alterar .env.development para VUE_APP_API_URL=http://localhost:8081/api/
+Criar arquivos ENV
+1. **.env.development**
+   1. *VUE_APP_API_URL*=http://localhost:8081/api/
+2. **.env.production**
+   1. *VUE_APP_API_URL*=https://job3-backend.herokuapp.com/api/
+   2. *VUE_APP_PUBLIC_PATH*=https://job3.com.br/
