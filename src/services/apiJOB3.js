@@ -19,5 +19,14 @@ export default {
                 callback(response);
             }
         })
+    },
+
+    put: (modulo, obj, callback) => {
+        axios.put(url+modulo, obj).then((response) => {
+            if (callback) {
+                callback(response);
+            }
+        })
     }
+    
 }
