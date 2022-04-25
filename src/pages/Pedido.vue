@@ -139,7 +139,8 @@
                     <!-- Seleção de Produto -->
                     <div class="col-md-6">
                         <input class="form-control" list="listaProdutos" id="produto" 
-                            placeholder="Selecione o produto..." v-model="produto" v-on:input="selecionaProduto"
+                            :placeholder="produtos.length === 0 ? 'Aguarde - Buscando produtos ...' : 'Selecione o produto...'" 
+                            v-model="produto" v-on:input="selecionaProduto"
                             :disabled="produtos.length === 0 ? true : false">
                         <datalist id="listaProdutos">
                             <option 

@@ -1,39 +1,45 @@
 <template>
     <main class="flex-shrink-0">
         <div class="container">
+            <br />
             <div class="row">
-                <div class="col-md-6">
-                    <input class="form-control" list="listaProdutos" id="produto" 
-                    placeholder="Selecione o produto..." v-model="produto" v-on:input="filtraProduto">
-                </div>
+                
+                    <div class="col-md-6">
+                        <input class="form-control" list="tabelaProdutos" id="produto" 
+                        placeholder="Digite a descrição do produto..." v-model="produto" v-on:input="filtraProduto">
+                    </div>
+                
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td scope="col">Codigo</td>
-                        <td scope="col">Descrição</td>
-                        <td scope="col">Situação</td>
-                        <td scope="col">Alterar Situação</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(produto, indice) in produtos" :key="produto.index">
-                        <td>{{produto.codigo}}</td>
-                        <td>{{produto.descricao}}</td>
-                        <td>{{produto.situacao}}</td>
-                        <td v-if="produto.situacao=='Inativo'">
-                            <button class="btn btn-success"  v-on:click.prevent="ativarInativar(produto, 'Ativo', indice)">
-                                Ativar
-                            </button>
-                        </td>
-                        <td v-if="produto.situacao=='Ativo'" v-on:click.prevent="ativarInativar(produto, 'Inativo', indice)">
-                            <button class="btn btn-danger">
-                                Inativar
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <br />
+            <div class="row">
+                <table class="table" id="tabelaProdutos">
+                    <thead>
+                        <tr class="header">
+                            <td scope="col">Codigo</td>
+                            <td scope="col">Descrição</td>
+                            <td scope="col">Situação</td>
+                            <td scope="col">Alterar Situação</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyTabela">
+                        <tr v-for="(produto, indice) in produtos" :key="produto.index" id="tabelaProdutos">
+                            <td>{{produto.codigo}}</td>
+                            <td>{{produto.descricao}}</td>
+                            <td>{{produto.situacao}}</td>
+                            <td v-if="produto.situacao=='Inativo'">
+                                <button class="btn btn-success"  v-on:click.prevent="ativarInativar(produto, 'Ativo', indice)">
+                                    Ativar
+                                </button>
+                            </td>
+                            <td v-if="produto.situacao=='Ativo'" v-on:click.prevent="ativarInativar(produto, 'Inativo', indice)">
+                                <button class="btn btn-danger">
+                                    Inativar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </template>
@@ -46,6 +52,7 @@ export default {
     data() {
         return {
             produtos: [],
+            produto:null,
             itemAtualizar: null
         }
     },
@@ -93,18 +100,23 @@ export default {
         },
 
         filtraProduto(e){
-            let descricaoProduto = e.target.value
-            let codigoArray = descricaoProduto.split(' - ')
-            let codigo = codigoArray[0]
-
-            if(codigo != this.produtoSelecionado.codigo){
-                this.produtos.forEach( i => {
-                    if (i.codigo === codigo) {
-                        this.produtoSelecionado = i
+            let descricaoProduto = e.target.value.toUpperCase()
+            console.log(descricaoProduto)
+            const tabela = document.getElementById("tbodyTabela")
+            
+            const tr = tabela.getElementsByTagName("tr");
+           
+             for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                let txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(descricaoProduto) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
-                })
-                this.$emit('selecionaProduto', this.produtoSelecionado.codigo)
-            }  
+                }
+            }
         }
     }
 }
