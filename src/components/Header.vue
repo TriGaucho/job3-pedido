@@ -1,6 +1,6 @@
 <template>
     <header> 
-        <nav class="navbar navbar-expand-md text-decoration-none " style="background-color:#0A3623">
+        <nav class="navbar navbar-expand-md text-decoration-none bg-gradient" style="background-color:#0A3623">
             <div class="container-fluid">
                 <div class="d-flex">
                     <a href="/" class="navbar-brand col-md-6">
