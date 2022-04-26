@@ -4,12 +4,18 @@
             <div class="container-fluid">
                 <div class="d-flex">
                     <a href="/" class="navbar-brand col-md-6">
-                        <img src="../assets/topLogarv.png" width="178" height="65" class="d-inline-block" alt="">
-                        <span class="fs-2 text-end col-md-0" style="color:#BB9E68">Pedido On-Line</span>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="bi bi-list" style="font-color"></span>
-                    </button>
+                        <img src="../assets/topLogarv.png" width="100%" height="100%" class="d-inline-block" alt="">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="bi bi-list" style="font-color"></span>
+                        </button>
                     </a>
+                </div>
+                <div class="d-flex">
+                    <span class="fs-2 text-end col-md-0" style="color:#BB9E68">
+                        <h1 class="h1">
+                            Pedido On-Line
+                        </h1>
+                    </span>
                 </div>
                 <div class="d-flex">
                     <div class="collapse navbar-collapse" id="navbarCollapse">

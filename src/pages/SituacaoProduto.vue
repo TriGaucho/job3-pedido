@@ -2,8 +2,7 @@
     <main class="flex-shrink-0">
         <div class="container">
             <br />
-            <div class="row">
-                
+            <div class="d-flex">
                     <div class="col-md-6">
                         <input class="form-control" list="tabelaProdutos" id="produto" 
                         placeholder="Digite a descrição do produto..." v-model="produto" v-on:input="filtraProduto">
@@ -11,7 +10,7 @@
                 
             </div>
             <br />
-            <div class="row">
+            <div class="d-flex">
                 <table class="table" id="tabelaProdutos">
                     <thead>
                         <tr class="header">
