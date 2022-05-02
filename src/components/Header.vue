@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-md text-decoration-none bg-gradient" style="background-color:#0A3623">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <a href="/" class="navbar-brand col-md-6">
+                    <a href="http://arvorezinha.com/" class="navbar-brand col-md-6" target="_blank">
                         <img src="../assets/topLogarv.png" width="100%" height="100%" class="d-inline-block" alt="">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="bi bi-list" style="font-color"></span>
@@ -24,13 +24,10 @@
                                 <a href="#" class="nav-link px-2 " style="color:#BB9E68">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Sobre</a>
+                                <a href="http://arvorezinha.com/sobrenos/" class="nav-link px-2" style="color:#BB9E68" target="_blank">Sobre</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Contato</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link px-2" style="color:#BB9E68">Historia</a>
+                                <a href="http://arvorezinha.com/contato/" class="nav-link px-2" style="color:#BB9E68" target="_blank">Contato</a>
                             </li>
                         </ul>    
                     </div>

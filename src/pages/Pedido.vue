@@ -156,7 +156,8 @@
                         <input 
                             class="form-control" 
                             type="number" 
-                            id="qtde" 
+                            id="qtde"
+                            min="0"
                             name="qtde" 
                             v-model="qtdeTemp"
                             placeholder="Qtd."
@@ -241,6 +242,19 @@
                     <div>
                         <textarea class="form-control" id="observacoes" v-model="observacoes" placeholder="Observações do Pedido"></textarea>
                     </div>
+                    <div class="col-md-2">
+                        <input 
+                            class="form-control" 
+                            type="text" 
+                            id="dataPrevista"
+                            name="dataPrevista" 
+                            placeholder= "Data de Entrega"
+                            onfocus="(this.type='date')"
+                            :class="{ 'is-invalid': $v.previsaoPedido.$error }"
+                            v-model.trim="$v.previsaoPedido.$model" 
+                        >
+                        <div class="invalid-feedback" v-if="!$v.previsaoPedido.required">Preencher Data Previsão.</div>
+                    </div>
                     <div class="col-md-2">  
                         <button class="btn btn-success" type="submit">Enviar Pedido</button>
                     </div>
@@ -280,7 +294,8 @@ export default {
             qtdeTemp: null,
             mensagemValidacao: '',
             observacoes: '',
-            obsInternas: ''
+            obsInternas: '',
+            previsaoPedido: null,
         }
     },
     validations: {
@@ -319,6 +334,9 @@ export default {
         itens: {
            required, 
            minLength: minLength(1),
+        },
+        previsaoPedido: {
+            required,
         }
     },
     methods: {
@@ -380,7 +398,8 @@ export default {
                 },
                 itens: this.itens,
                 obs: this.observacoes,
-                obs_internas: this.obsInternas
+                obs_internas: this.obsInternas,
+                previsaoPedido: this.previsaoPedido
             }
             
             apiJOB3.post('pedido', dadosPedido, res => {
