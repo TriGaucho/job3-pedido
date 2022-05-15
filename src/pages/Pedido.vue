@@ -30,12 +30,13 @@
                             placeholder="Nome"
                             
                         >
-                        <div class="invalid-feedback" v-if="!$v.nome.required">Preencher o Nome</div>
+                        <div class="invalid-feedback" v-if="!$v.fone.required">Preencher o Nome</div>
                     </div>
                     <div class="col-md-2">
                         <!-- <label class="form-label" for="fone">WhatsApp</label> -->
                         <input 
-                            class="form-control" 
+                            class="form-control"
+                            :class="{ 'is-invalid': $v.fone.$error }" 
                             type="text" 
                             v-model='fone' 
                             id="fone" 
@@ -43,6 +44,7 @@
                             v-mask="'(##) #####.####'"
                             placeholder="Telefone"
                         >
+                        <div class="invalid-feedback" v-if="!$v.nome.required">Preencher o telefone</div>
                     </div>
                     <!-- Dados do endereço -->
                     <div class="col-md-2">
@@ -129,12 +131,14 @@
                         <!-- <label class="form-label" for="complemento">Compl.</label> -->
                         <input 
                             class="form-control" 
+                            :class="{ 'is-invalid': $v.complemento.$error }"
                             type="text" 
                             id="complemento" 
                             name="complemento" 
                             v-model="complemento"
                             placeholder="Complemento"
                         >
+                        <div class="invalid-feedback" v-if="!$v.complemento.required">Indicar se CASA, FUNDOS, LOTE, etc</div>
                     </div>
                     <!-- Seleção de Produto -->
                     <div class="col-md-6">
@@ -307,7 +311,8 @@ export default {
             required
         }, 
         fone: {
-            required
+            required,
+            minLength: minLength(14)
         },
         cep: {
            required,
@@ -330,6 +335,9 @@ export default {
         numero: {
             required,
             between: between(1, 9999)
+        },
+        complemento: {
+            required,
         },
         itens: {
            required, 
