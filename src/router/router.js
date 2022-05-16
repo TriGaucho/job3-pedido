@@ -3,18 +3,33 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Pedido from '../pages/Pedido'
-import SituacaoProduto from '../pages/SituacaoProduto'
+import Login from '../pages/Login'
+import Cadastro from '../pages/Cadastro'
+import Produtos from '../pages/Produtos'
+// import Pedido from '../pages/Pedido'
+// import SituacaoProduto from '../pages/SituacaoProduto'
 
 const routes = [
     {
         path: '/',
-        component: Pedido
+        component: Login
     },
     {
-        path: '/situacaoProduto',
-        component: SituacaoProduto
-    }
+        path: '/cadastro',
+        component: Cadastro
+    },
+    {
+        path: '/produtos',
+        component: Produtos
+    },
+    // {
+    //     path: '/',
+    //     component: Pedido
+    // },
+    // {
+    //     path: '/situacaoProduto',
+    //     component: SituacaoProduto
+    // }
 ]
 
 const router = new VueRouter({
