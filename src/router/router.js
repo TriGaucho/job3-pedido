@@ -4,8 +4,9 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Login from '../pages/Login'
-import Cadastro from '../pages/Cadastro'
-import Produtos from '../pages/Produtos'
+import Pessoa from '../pages/Pessoa'
+import Produto from '../pages/Produto'
+import Intro from '../pages/Intro'
 // import Pedido from '../pages/Pedido'
 // import SituacaoProduto from '../pages/SituacaoProduto'
 
@@ -15,12 +16,16 @@ const routes = [
         component: Login
     },
     {
-        path: '/cadastro',
-        component: Cadastro
+        path: '/pessoa',
+        component: Pessoa
     },
     {
-        path: '/produtos',
-        component: Produtos
+        path: '/produto',
+        component: Produto
+    },
+    {
+        path: '/intro',
+        component: Intro
     },
     // {
     //     path: '/',

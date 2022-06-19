@@ -1,18 +1,17 @@
 <template>
     <div class="text-center">
         <main class="form-signin">
-            <form action="http://localhost:8080/?#/cadastro">
+            <form action="http://localhost:8080/?#/intro">
                 <img class="mb-4" src="../assets/Job3_2.svg" alt="" width="120" height="120">
-                <!-- <h1 class="h3 mb-3 fw-normal">Identifique-se</h1> -->
 
                 <div class="form-floating ">
                     <input type="email" class="form-control" id="floatingInput" placeholder="nome@email.com">
-                    <label for="floatingInput">E-mail de acesso</label>
+                    <label for="floatingInput">Login</label>
                 </div>
 
                 <div class="form-floating">
                     <input type="password" class="form-control" id="floatingPassword" placeholder="Senha de acesso">
-                    <label for="floatingPassword" >Senha de acesso</label>
+                    <label for="floatingPassword" >Senha</label>
                 </div>
                     <div class="checkbox mb-3">
                         <label>

@@ -82,7 +82,7 @@
 import { required, minLength } from 'vuelidate/lib/validators'
 
     export default{
-        name: 'Cadastro',
+        name: 'Pessoa',
         data() {
             return {
                 nome: '',
