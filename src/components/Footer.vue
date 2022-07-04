@@ -12,9 +12,9 @@
 
                 <ul class="nav col-md-4 position-absolute end-0 list-unstyled d-flex justify-content-end ">
                     <li class="ms-3">
-                        <a class="text-muted" target="_blank" href="https://api.whatsapp.com/send?phone=5551992019458&text=Ol%C3%A1!%20Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20para%20maiores%20informa%C3%A7%C3%B5es.">
+                        <!-- <a class="text-muted" target="_blank" href="https://api.whatsapp.com/send?phone=5551992019458&text=Ol%C3%A1!%20Estou%20entrando%20em%20contato%20atrav%C3%A9s%20do%20site%20para%20maiores%20informa%C3%A7%C3%B5es.">
                             <i class="bi bi-whatsapp text-light " style="font-size: 2rem"></i>
-                        </a>
+                        </a> -->
                     </li>
                     <li class="ms-3">
                         <a class="text-muted" target="_blank" href="https://www.instagram.com/job3solucoes/">
