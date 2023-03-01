@@ -2,16 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
+
+import Pedido from '../pages/Pedido'
+import SituacaoProduto from '../pages/SituacaoProduto'
+
 const routes = [
     {
         path: '/',
-        name: 'pedido',
-        component: () => import(/* webpackChunkName: "pedido" */ '@/pages/Pedido')
+        component: Pedido
     },
     {
         path: '/situacaoProduto',
-        name: 'situacaoProduto',
-        component: () => import(/* webpackChunkName: "situacaoProduto" */ '@/pages/SituacaoProduto')
+        component: SituacaoProduto
     }
 ]
 
@@ -19,6 +21,5 @@ const router = new VueRouter({
     routes,
     mode: 'hash'
 })
-
 
 export default router

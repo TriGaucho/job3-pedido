@@ -6,7 +6,7 @@ import Vuelidate from 'vuelidate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import App from './App.vue'
-import router from './router/router.js'
+import router from './router/router'
 
 Vue.config.productionTip = false
 Vue.use(VueMask)

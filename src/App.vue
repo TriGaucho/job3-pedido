@@ -2,7 +2,7 @@
   <div id="app" class="d-flex flex-column h-100">
       <Header />
         
-      <router-view path="$router.key" />
+      <router-view />
         
       <Footer />
   </div>
