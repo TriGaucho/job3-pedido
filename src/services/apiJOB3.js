@@ -1,20 +1,21 @@
 import axios from 'axios';
 
 const url = process.env.VUE_APP_API_URL
+const tenatId = process.env.VUE_APP_TENANT_ID
 
 export default {
     get: (modulo, callback) => {
-        axios.get(url+modulo).then((response) => {
+        const endpoint = url+modulo+tenatId
+        axios.get(endpoint).then((response) => {
             if (callback) {
                 callback(response);
             }
         })
-        console.log(url)
-        console.log(modulo)
     },
 
     post: (modulo, obj, callback) => {
-        axios.post(url+modulo, obj).then((response) => {
+        const endpoint = url+modulo+tenatId
+        axios.post(endpoint, obj).then((response) => {
             if (callback) {
                 callback(response);
             }
@@ -22,7 +23,7 @@ export default {
     },
 
     put: (modulo, obj, callback) => {
-        axios.put(url+modulo, obj).then((response) => {
+        axios.put(url+tenatId+modulo, obj).then((response) => {
             if (callback) {
                 callback(response);
             }
