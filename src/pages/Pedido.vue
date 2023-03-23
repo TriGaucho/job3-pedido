@@ -184,7 +184,7 @@
                   ' - ' +
                   produto.descricao +
                   ' - R$ ' +
-                  produto.valorAtacado
+                  produto.valorTabela4
                 "
               ></option>
             </datalist>
@@ -226,7 +226,7 @@
             <!-- <label class="form-label" for="preco" v-if="!produto">Preço: R$ 0,00</label> -->
             <!-- <label class="form-label" for="preco" v-else>Preço: R$ {{produto.preco * qtdeTemp}}</label> -->
             <input
-              v-if="!produtoSelecionado.valorAtacado"
+              v-if="!produtoSelecionado.valorTabela4"
               class="form-control"
               type="text"
               id="preco"
@@ -240,7 +240,7 @@
               id="preco"
               name="preco"
               v-else
-              v-bind:value="'R$ ' + produtoSelecionado.valorAtacado * qtdeTemp"
+              v-bind:value="'R$ ' + produtoSelecionado.valorTabela4 * qtdeTemp"
               disabled
             />
           </div>
@@ -346,7 +346,6 @@ export default {
   name: "Pedido",
   data() {
     return {
-      numeroPedido: null,
       cliente: null,
       dadosCliente: {},
       fNovoCliente: true,
@@ -436,7 +435,7 @@ export default {
         idProduto: this.produtoSelecionado.idProduto,
         observacao: this.produtoSelecionado.descricao,
         quantidade: this.qtdeTemp,
-        valorUnidade: this.produtoSelecionado.valorAtacado,
+        valorUnidade: this.produtoSelecionado.valorTabela4,
         unidade: this.produtoSelecionado.unidade,
         total: this.totalProdutoSelecionado,
         desconto: 0.0,
@@ -489,15 +488,16 @@ export default {
       }
 
       //DADOS DO PEDIDO
-      this.pedidoCompleto.dadosPedido = {
+      const logradouro = !this.complemento ? `${this.endereco}, ${this.numero}` : `${this.endereco}, ${this.numero}/${this.complemento}`
+      this.pedidoCompleto.dadosDocumento = {
         cliente: !this.cliente ? null : this.cliente,
         email: "",
-        numeroPedido: this.numeroPedido, 
+        numeroDocumento: null, 
+        tipoDocumento: 0,
         planoPagamento: "",
         telefone: this.fone,
         cep: this.cep,
-        logradouro:
-          this.endereco + " / " + this.numero + " , " + this.complemento,
+        logradouro: logradouro,
         bairro: this.bairro,
         cidade: this.cidade,
         uf: this.uf,
@@ -508,10 +508,10 @@ export default {
       await this.incluiProdutosPedido();
 
       //DADOS DOS PRODUTO
-      this.pedidoCompleto.produtosPedido = this.produtosPedido;
+      this.pedidoCompleto.produtosDocumento = this.produtosPedido;
 
       console.log(this.pedidoCompleto)
-      apiJOB3.post("pedido", this.pedidoCompleto, () => {
+      apiJOB3.post("documento-pedido", this.pedidoCompleto, () => {
         alert(`Pedido criado com sucesso`);
         this.limparForm();
       });
@@ -553,7 +553,7 @@ export default {
     },
   },
   mounted() {
-    apiJOB3.get("produto", (response) => {
+    apiJOB3.get("produto-pedido", (response) => {
       this.produtos = response.data;
     });
   },
@@ -578,7 +578,7 @@ export default {
     cpf_cnpj: function (novoCPFCNPJ) {
       if (novoCPFCNPJ.length === 14) {
         this.fNovoCliente = true;
-        apiJOB3.get(`pessoa/${novoCPFCNPJ}`, (response) => {
+        apiJOB3.get(`cliente-pedido/${novoCPFCNPJ}`, (response) => {
           if (response.data) {
             this.nome = response.data.clienteNome;
             this.fone = response.data.clienteFone;

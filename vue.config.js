@@ -3,6 +3,6 @@ module.exports = {
     devtool: 'source-map'
   },
   filenameHashing: false,
-  publicPath: process.env.PUBLIC_PATH === 'production' ? '/hml' : '/hml',
-  outputDir: 'hml',
+  publicPath: process.env.PUBLIC_PATH === 'production' ? '/hml-pedido' : '/hml-pedido',
+  outputDir: 'hml-pedido',
 }
