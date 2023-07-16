@@ -4,9 +4,11 @@ const url = process.env.VUE_APP_API_URL
 const tenatId = process.env.VUE_APP_TENANT_ID
 
 export default {
-    get: (modulo, callback) => {
+    get: (modulo, filtro, callback) => {
         const endpoint = url+modulo+tenatId
-        axios.get(endpoint).then((response) => {
+        const params = !filtro ? '' : filtro
+
+        axios.get(endpoint, {params}).then((response) => {
             if (callback) {
                 callback(response);
             }

@@ -7,6 +7,21 @@
           <div class="col-md-2">
             <!-- <label class="form-label" for="cpf">CPF</label> -->
             <input
+              v-if="editCpfCnpj"
+              class="form-control"
+              :class="{ 'is-invalid': $v.cpf_cnpj.$error }"
+              v-model.trim="$v.cpf_cnpj.$model"
+              type="text"
+              id="cpf"
+              name="cpf"
+              placeholder="CPF/CNPJ"
+              v-mask="maskFormatada"
+              @blur="aplicaMascara"
+              @focus="resetarMask"
+              maxlength="14"
+            />
+            <input
+              v-else
               class="form-control"
               :class="{ 'is-invalid': $v.cpf_cnpj.$error }"
               v-model.trim="$v.cpf_cnpj.$model"
@@ -17,7 +32,7 @@
               placeholder="CPF"
             />
             <div class="invalid-feedback" v-if="!$v.cpf_cnpj.required">
-              Preencher o CPF
+              Campo obrigatório
             </div>
           </div>
           <div class="col-md-8">
@@ -335,6 +350,10 @@
 <script>
 import apiCep from "../services/apiCep.js";
 import apiJOB3 from "../services/apiJOB3.js";
+
+const subclasse = process.env.VUE_APP_SUBCLASSE;
+const editCpfCnpj = process.env.VUE_APP_CPFCNPJ;
+
 import {
   required,
   minLength,
@@ -346,6 +365,7 @@ export default {
   name: "Pedido",
   data() {
     return {
+      editCpfCnpj,
       cliente: null,
       dadosCliente: {},
       fNovoCliente: true,
@@ -371,12 +391,14 @@ export default {
       previsaoPedido: null,
       produtosPedido: [],
       pedidoCompleto: {},
+      maskFormatada: "",
     };
   },
   validations: {
     cpf_cnpj: {
       required,
       minLength: minLength(14),
+      maxLength: editCpfCnpj ? maxLength(18) : maxLength(14),
     },
     nome: {
       required,
@@ -488,11 +510,13 @@ export default {
       }
 
       //DADOS DO PEDIDO
-      const logradouro = !this.complemento ? `${this.endereco}, ${this.numero}` : `${this.endereco}, ${this.numero}/${this.complemento}`
+      const logradouro = !this.complemento
+        ? `${this.endereco}, ${this.numero}`
+        : `${this.endereco}, ${this.numero}/${this.complemento}`;
       this.pedidoCompleto.dadosDocumento = {
         cliente: !this.cliente ? null : this.cliente,
         email: "",
-        numeroDocumento: null, 
+        numeroDocumento: null,
         tipoDocumento: 0,
         planoPagamento: "",
         telefone: this.fone,
@@ -510,7 +534,7 @@ export default {
       //DADOS DOS PRODUTO
       this.pedidoCompleto.produtosDocumento = this.produtosPedido;
 
-      console.log(this.pedidoCompleto)
+      console.log(this.pedidoCompleto);
       apiJOB3.post("documento-pedido", this.pedidoCompleto, () => {
         alert(`Pedido criado com sucesso`);
         this.limparForm();
@@ -551,9 +575,38 @@ export default {
         this.$emit("selecionaProduto", this.produtoSelecionado.codigo);
       }
     },
+
+    aplicaMascara() {
+      if (this.cpf_cnpj.length === 11) this.maskFormatada = "###.###.###-##";
+      if (this.cpf_cnpj.length === 14)
+        this.maskFormatada = "##.###.###/####-##";
+      this.buscaCliente();
+    },
+
+    buscaCliente() {
+      this.fNovoCliente = true;
+      let cpfCnpjTemp = this.cpf_cnpj.replace(/\D/g, "");
+
+      apiJOB3.get(`cliente-pedido/${cpfCnpjTemp}`, null, (response) => {
+        console.log(response)
+        if (response.data) {
+          this.nome = response.data.clienteNome;
+          this.fone = response.data.clienteFone;
+          this.cliente = response.data.clienteId;
+          this.fNovoCliente = false;
+        }
+        this.resetarMask();
+      });
+      
+    },
+
+    resetarMask() {
+      this.maskFormatada = "";
+    },
   },
+
   mounted() {
-    apiJOB3.get("produto-pedido", (response) => {
+    apiJOB3.get("produto-pedido", { subclasse }, (response) => {
       this.produtos = response.data;
     });
   },
@@ -575,22 +628,33 @@ export default {
       }
     },
 
-    cpf_cnpj: function (novoCPFCNPJ) {
-      if (novoCPFCNPJ.length === 14) {
-        this.fNovoCliente = true;
-        apiJOB3.get(`cliente-pedido/${novoCPFCNPJ}`, (response) => {
-          if (response.data) {
-            this.nome = response.data.clienteNome;
-            this.fone = response.data.clienteFone;
-            this.cliente = response.data.clienteId;
-            this.fNovoCliente = false;
-          }
-        });
-      }
-    },
+    // cpf_cnpj: function (novoCPFCNPJ) {
+    //   if (novoCPFCNPJ.length === 11 || novoCPFCNPJ.length === 14) {
+    //     this.fNovoCliente = true;
+    //     const cpfCnpjTemp = novoCPFCNPJ.replace(/\D/g, "");
+    //     apiJOB3.get(`cliente-pedido/${cpfCnpjTemp}`, null, (response) => {
+    //       if (response.data) {
+    //         this.nome = response.data.clienteNome;
+    //         this.fone = response.data.clienteFone;
+    //         this.cliente = response.data.clienteId;
+    //         this.fNovoCliente = false;
+    //       }
+    //     });
+    //   }
+    // },
   },
 };
 </script>
 
 <style scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 </style>
